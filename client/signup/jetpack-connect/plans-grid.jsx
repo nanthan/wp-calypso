@@ -10,6 +10,12 @@ import { localize } from 'i18n-calypso';
 import Main from 'components/main';
 import StepHeader from '../step-header';
 import PlansFeaturesMain from 'my-sites/plans-features-main';
+import { abtest } from 'lib/abtest';
+
+/**
+ * Constants
+ */
+const defaultJetpackSite = { jetpack: true, plan: {}, isUpgradeable: () => true };
 
 class JetpackPlansGrid extends Component {
 	static propTypes = {
@@ -33,6 +39,17 @@ class JetpackPlansGrid extends Component {
 
 		let headerText = translate( 'Your site is now connected!' );
 		let subheaderText = translate( 'Now pick a plan that\'s right for you.' );
+
+		if ( abtest( 'jetpackPlansHeadlines' ) === 'headlineB' ) {
+			headerText = translate( 'Simple, affordable pricing.' );
+		}
+		if ( abtest( 'jetpackPlansHeadlines' ) === 'headlineC' ) {
+			headerText = translate( 'Protect your site from data loss.' );
+		}
+		if ( abtest( 'jetpackPlansHeadlines' ) === 'headlineD' ) {
+			headerText = translate( 'Protect your data from hackers.' );
+		}
+
 		if ( showFirst ) {
 			headerText = translate( 'You are moments away from connecting your site' );
 		}
@@ -55,7 +72,6 @@ class JetpackPlansGrid extends Component {
 	}
 
 	render() {
-		const defaultJetpackSite = { jetpack: true, plan: {}, isUpgradeable: () => true };
 		return (
 			<Main wideLayout>
 				<div className="jetpack-connect__plans">
