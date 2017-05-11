@@ -2,7 +2,7 @@
  * External dependencies
  */
 import React, { Component } from 'react';
-import i18n from 'i18n-calypso';
+import { localize } from 'i18n-calypso';
 
 /**
  * Internal dependencies
@@ -35,20 +35,20 @@ class ShippingPackageList extends Component {
 	}
 
 	render() {
-		const __ = i18n.translate;
+		const { translate } = this.props;
 
 		return (
 			<div>
 				<ShippingHeader
-					label={ __( 'Packages' ) }
-					description={ __( 'Add frequently used packages to make fulfillment easier.' ) }>
-					<Button>{ __( 'Add package' ) }</Button>
+					label={ translate( 'Packages' ) }
+					description={ translate( 'Add frequently used packages to make fulfillment easier.' ) }>
+					<Button>{ translate( 'Add package' ) }</Button>
 				</ShippingHeader>
 				<Card className="shipping__packages">
 					<div className="shipping__packages-row shipping__packages-header">
 						<div className="shipping__packages-row-icon"></div>
-						<div className="shipping__packages-row-details">{ __( 'Name' ) }</div>
-						<div className="shipping__packages-row-dimensions">{ __( 'Dimensions' ) }</div>
+						<div className="shipping__packages-row-details">{ translate( 'Name' ) }</div>
+						<div className="shipping__packages-row-dimensions">{ translate( 'Dimensions' ) }</div>
 						<div className="shipping__packages-row-actions" />
 					</div>
 					{ this.state.packages.map( this.renderShippingPackage ) }
@@ -58,4 +58,4 @@ class ShippingPackageList extends Component {
 	}
 }
 
-export default ShippingPackageList;
+export default localize( ShippingPackageList );

@@ -2,7 +2,7 @@
  * External dependencies
  */
 import React, { Component } from 'react';
-import i18n from 'i18n-calypso';
+import { localize } from 'i18n-calypso';
 
 /**
  * Internal dependencies
@@ -27,17 +27,17 @@ class ShippingOrigin extends Component {
 	}
 
 	render() {
-		const __ = i18n.translate;
+		const { translate } = this.props;
 
 		return (
 			<div>
 				<ShippingHeader
-					label={ __( 'Shipping Origin' ) }
-					description={ __( 'The address of where you will be shipping from.' ) } />
+					label={ translate( 'Shipping Origin' ) }
+					description={ translate( 'The address of where you will be shipping from.' ) } />
 				<Notice
 					status="is-info"
 					className="shipping__address-notice"
-					text={ __( 'This is the address you entered while signing up for a WordPress.com Store.' ) }
+					text={ translate( 'This is the address you entered while signing up for a WordPress.com Store.' ) }
 					showDismiss={ true } >
 				</Notice>
 				<Card>
@@ -47,11 +47,11 @@ class ShippingOrigin extends Component {
 						<p>{ this.state.address.city }</p>
 						<p>{ this.state.address.country }</p>
 					</div>
-					<a>{ __( 'Edit address' ) }</a>
+					<a>{ translate( 'Edit address' ) }</a>
 				</Card>
 			</div>
 		);
 	}
 }
 
-export default ShippingOrigin;
+export default localize( ShippingOrigin );

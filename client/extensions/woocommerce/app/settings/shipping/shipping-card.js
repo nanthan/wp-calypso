@@ -2,7 +2,7 @@
  * External dependencies
  */
 import React, { Component } from 'react';
-import i18n from 'i18n-calypso';
+import { localize } from 'i18n-calypso';
 
 /**
  * Internal dependencies
@@ -13,8 +13,7 @@ import PaymentLogo from 'components/payment-logo';
 
 class ShippingCard extends Component {
 	render() {
-		const { selected, type, digits, name, date, onSelect } = this.props;
-		const __ = i18n.translate;
+		const { translate, selected, type, digits, name, date, onSelect } = this.props;
 
 		return (
 			<CompactCard className="shipping__card">
@@ -30,7 +29,7 @@ class ShippingCard extends Component {
 						<p className="shipping__card-name">{ name }</p>
 					</div>
 					<div className="shipping__card-date">
-						{ __( 'Expires %(date)s', {
+						{ translate( 'Expires %(date)s', {
 							args: { date: date },
 							context: 'date is of the form MM/YY'
 						} ) }
@@ -41,4 +40,4 @@ class ShippingCard extends Component {
 	}
 }
 
-export default ShippingCard;
+export default localize( ShippingCard );

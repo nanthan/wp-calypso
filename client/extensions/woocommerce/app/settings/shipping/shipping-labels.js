@@ -2,8 +2,8 @@
  * External dependencies
  */
 import React, { Component } from 'react';
-import i18n from 'i18n-calypso';
 import classNames from 'classnames';
+import { localize } from 'i18n-calypso';
 
 /**
  * Internal dependencies
@@ -69,13 +69,13 @@ class ShippingLabels extends Component {
 	}
 
 	render() {
-		const __ = i18n.translate;
+		const { translate } = this.props;
 
 		return (
 			<div>
 				<ShippingHeader
-					label={ __( 'Shipping Labels' ) }
-					description={ __( 'Print shipping labels yourself.' ) }>
+					label={ translate( 'Shipping Labels' ) }
+					description={ translate( 'Print shipping labels yourself.' ) }>
 					<FormToggle onChange={ this.onToggle } checked={ this.state.visible } />
 				</ShippingHeader>
 				<Card className={ classNames( 'shipping__labels-container', { hidden: ! this.state.visible } ) }>
@@ -83,25 +83,25 @@ class ShippingLabels extends Component {
 						<FormLabel
 							className="shipping__labels-paper-size"
 							htmlFor="paper-size">
-							{ __( 'Paper size' ) }
+							{ translate( 'Paper size' ) }
 						</FormLabel>
 						<FormSelect name="paper-size">
-							<option>{ __( 'Letter' ) }</option>
-							<option>{ __( 'Legal' ) }</option>
-							<option>{ __( 'Label (4"x6")' ) }</option>
-							<option>{ __( 'A4' ) }</option>
+							<option>{ translate( 'Letter' ) }</option>
+							<option>{ translate( 'Legal' ) }</option>
+							<option>{ translate( 'Label (4"x6")' ) }</option>
+							<option>{ translate( 'A4' ) }</option>
 						</FormSelect>
 					</FormFieldSet>
 					<FormFieldSet>
 						<FormLabel
 							className="shipping__cards-label">
-							{ __( 'Credit card' ) }
+							{ translate( 'Credit card' ) }
 						</FormLabel>
 						<p className="shipping__header-description shipping__credit-card-description">
-							{ __( 'Use your credit card on file to pay for the labels you print or add a new one.' ) }
+							{ translate( 'Use your credit card on file to pay for the labels you print or add a new one.' ) }
 						</p>
 						{ this.state.cards.map( this.renderCard ) }
-						<Button compact>{ __( 'Add another credit card' ) }</Button>
+						<Button compact>{ translate( 'Add another credit card' ) }</Button>
 					</FormFieldSet>
 				</Card>
 			</div>
@@ -109,4 +109,4 @@ class ShippingLabels extends Component {
 	}
 }
 
-export default ShippingLabels;
+export default localize( ShippingLabels );

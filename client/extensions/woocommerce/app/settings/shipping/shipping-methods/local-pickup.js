@@ -2,8 +2,8 @@
  * External dependencies
  */
 import React, { Component } from 'react';
-import i18n from 'i18n-calypso';
 import Gridicon from 'gridicons';
+import { localize } from 'i18n-calypso';
 
 /**
  * Internal dependencies
@@ -32,12 +32,12 @@ class LocalPickupMethod extends Component {
 	}
 
 	render() {
-		const __ = i18n.translate;
+		const { translate } = this.props;
 
 		return (
 			<div className="shipping-methods__method-container shipping-methods__local-pickup">
 				<FormFieldSet>
-					<FormLabel>{ __( 'How much will you charge for local pickup?' ) }</FormLabel>
+					<FormLabel>{ translate( 'How much will you charge for local pickup?' ) }</FormLabel>
 					<FormCurrencyInput
 						currencySymbolPrefix={ this.state.currencySymbolPrefix }
 						currencySymbolSuffix={ this.state.currencySymbolSuffix }
@@ -47,7 +47,7 @@ class LocalPickupMethod extends Component {
 					<FormCheckbox
 						checked={ this.state.taxable }
 						className="shipping-methods__local-pickup-taxable" />
-					{ __( 'Taxable' ) }
+					{ translate( 'Taxable' ) }
 					<span
 						className="shipping-methods__local-pickup-taxable-help"
 						ref="taxableHelp"
@@ -60,7 +60,7 @@ class LocalPickupMethod extends Component {
 						context={ this.refs && this.refs.taxableHelp }
 						className="shipping-methods__local-pickup-taxable-tooltip is-dialog-visible"
 						position="top">
-						{ __( 'Taxable explanation' ) }
+						{ translate( 'Taxable explanation' ) }
 					</Tooltip>
 				</FormFieldSet>
 			</div>
@@ -68,4 +68,4 @@ class LocalPickupMethod extends Component {
 	}
 }
 
-export default LocalPickupMethod;
+export default localize( LocalPickupMethod );

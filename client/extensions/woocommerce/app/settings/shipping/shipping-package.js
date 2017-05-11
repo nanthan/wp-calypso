@@ -2,8 +2,8 @@
  * External dependencies
  */
 import React, { Component } from 'react';
-import i18n from 'i18n-calypso';
 import Gridicon from 'gridicons';
+import { localize } from 'i18n-calypso';
 
 /**
  * Internal dependencies
@@ -12,9 +12,8 @@ import Button from 'components/button';
 
 class ShippingPackage extends Component {
 	render() {
-		const { type, name, dimensions } = this.props;
+		const { translate, type, name, dimensions } = this.props;
 		const icon = 'envelope' === type ? 'mail' : 'product';
-		const __ = i18n.translate;
 
 		return (
 			<div className="shipping__packages-row">
@@ -26,11 +25,11 @@ class ShippingPackage extends Component {
 				</div>
 				<div className="shipping__packages-row-dimensions">{ dimensions }</div>
 				<div className="shipping__packages-row-actions">
-					<Button compact>{ __( 'Edit' ) }</Button>
+					<Button compact>{ translate( 'Edit' ) }</Button>
 				</div>
 			</div>
 		);
 	}
 }
 
-export default ShippingPackage;
+export default localize( ShippingPackage );

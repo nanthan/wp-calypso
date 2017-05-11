@@ -2,7 +2,7 @@
  * External dependencies
  */
 import React, { Component } from 'react';
-import i18n from 'i18n-calypso';
+import { localize } from 'i18n-calypso';
 
 /**
  * Internal dependencies
@@ -52,20 +52,20 @@ class ShippingZoneList extends Component {
 	}
 
 	render() {
-		const __ = i18n.translate;
+		const { translate } = this.props;
 
 		return (
 			<div>
 				<ShippingHeader
-					label={ __( 'Shipping Zones' ) }
-					description={ __( 'The regions you ship to and the methods you will provide.' ) }>
-					<Button onClick={ this.onAddZoneOpen }>{ __( 'Add zone' ) }</Button>
+					label={ translate( 'Shipping Zones' ) }
+					description={ translate( 'The regions you ship to and the methods you will provide.' ) }>
+					<Button onClick={ this.onAddZoneOpen }>{ translate( 'Add zone' ) }</Button>
 				</ShippingHeader>
 				<Card className="shipping__zones">
 					<div className="shipping__zones-row shipping__zones-header">
 						<div className="shipping__zones-row-icon"></div>
-						<div className="shipping__zones-row-location">{ __( 'Location' ) }</div>
-						<div className="shipping__zones-row-method">{ __( 'Shipping method' ) }</div>
+						<div className="shipping__zones-row-location">{ translate( 'Location' ) }</div>
+						<div className="shipping__zones-row-method">{ translate( 'Shipping method' ) }</div>
 						<div className="shipping__zones-row-actions" />
 					</div>
 					{ this.state.shippingZones.map( this.renderShippingZone ) }
@@ -76,4 +76,4 @@ class ShippingZoneList extends Component {
 	}
 }
 
-export default ShippingZoneList;
+export default localize( ShippingZoneList );

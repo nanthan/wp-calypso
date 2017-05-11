@@ -2,7 +2,7 @@
  * External dependencies
  */
 import React, { Component } from 'react';
-import i18n from 'i18n-calypso';
+import { localize } from 'i18n-calypso';
 
 /**
  * Internal dependencies
@@ -39,20 +39,20 @@ class FreeShippingMethod extends Component {
 	}
 
 	render() {
-		const __ = i18n.translate;
+		const { translate } = this.props;
 
 		return (
 			<div className="shipping-methods__method-container">
-				<FormLabel>{ __( 'Who gets free shipping?' ) }</FormLabel>
+				<FormLabel>{ translate( 'Who gets free shipping?' ) }</FormLabel>
 				<div className="shipping-methods__free-shipping-option">
 					<FormRadio value="everyone"
 						checked={ this.state.everyone }
 						onChange={ this.onOptionChange } />
-					{ __( 'Everyone!' ) }
+					{ translate( 'Everyone!' ) }
 				</div>
 				<div className="shipping-methods__free-shipping-option">
 					<FormRadio value="paying" checked={ ! this.state.everyone } onChange={ this.onOptionChange } />
-					{ __( 'Customers that spend {{priceInput/}} or more per order', {
+					{ translate( 'Customers that spend {{priceInput/}} or more per order', {
 						components: {
 							priceInput: this.renderMinSpendBox()
 						}
@@ -63,4 +63,4 @@ class FreeShippingMethod extends Component {
 	}
 }
 
-export default FreeShippingMethod;
+export default localize( FreeShippingMethod );

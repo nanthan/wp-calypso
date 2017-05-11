@@ -2,8 +2,8 @@
  * External dependencies
  */
 import React, { Component } from 'react';
-import i18n from 'i18n-calypso';
 import clone from 'lodash/clone';
+import { localize } from 'i18n-calypso';
 
 /**
  * Internal dependencies
@@ -66,7 +66,7 @@ class ShippingZoneDialog extends Component {
 
 	renderShippingMethod( method, index ) {
 		const { methodId } = method;
-		const __ = i18n.translate;
+		const { translate } = this.props;
 
 		const onMethodChange = ( event ) => {
 			this.changeShippingMethod( index, event.target.value );
@@ -77,8 +77,8 @@ class ShippingZoneDialog extends Component {
 				<FormSelect
 					value={ methodId }
 					onChange={ onMethodChange } >
-					<option value="free">{ __( 'Free shipping' ) }</option>
-					<option value="local">{ __( 'Local pickup' ) }</option>
+					<option value="free">{ translate( 'Free shipping' ) }</option>
+					<option value="local">{ translate( 'Local pickup' ) }</option>
 				</FormSelect>
 				{ 'free' === methodId
 					? <FreeShippingMethod { ...method } />
@@ -88,11 +88,10 @@ class ShippingZoneDialog extends Component {
 	}
 
 	render() {
-		const { isVisible, onClose } = this.props;
-		const __ = i18n.translate;
+		const { translate, isVisible, onClose } = this.props;
 		const buttons = [
-			{ action: 'cancel', label: __( 'Cancel' ) },
-			{ action: 'add', label: __( 'Add zone' ), isPrimary: true },
+			{ action: 'cancel', label: translate( 'Cancel' ) },
+			{ action: 'add', label: translate( 'Add zone' ), isPrimary: true },
 		];
 
 		return (
@@ -101,27 +100,29 @@ class ShippingZoneDialog extends Component {
 				isVisible={ isVisible }
 				buttons={ buttons }
 				onClose={ onClose } >
-				<div className="shipping__header">{ __( 'Add new shipping zone' ) }</div>
+				<div className="shipping__header">{ translate( 'Add new shipping zone' ) }</div>
 				<FormFieldSet>
-					<FormLabel htmlFor="zone-name">{ __( 'Shipping zone name' ) }</FormLabel>
-					<FormTextInput name="zone-name" placeholder={ __( 'For your reference only, the customer will not see this' ) } />
+					<FormLabel htmlFor="zone-name">{ translate( 'Shipping zone name' ) }</FormLabel>
+					<FormTextInput
+						name="zone-name"
+						placeholder={ translate( 'For your reference only, the customer will not see this' ) } />
 				</FormFieldSet>
 				<FormFieldSet>
-					<FormLabel>{ __( 'Shipping location' ) }</FormLabel>
+					<FormLabel>{ translate( 'Shipping location' ) }</FormLabel>
 					<TokenField
 						value={ this.state.location }
 						onChange={ this.onLocationChange } />
 				</FormFieldSet>
 				<div>
-					<FormLabel>{ __( 'Shipping method' ) }</FormLabel>
+					<FormLabel>{ translate( 'Shipping method' ) }</FormLabel>
 					{ this.state.shippingMethods.map( this.renderShippingMethod ) }
 				</div>
 				<FormFieldSet>
-					<Button compact onClick={ this.addMethod }>{ __( 'Add another shipping method' ) }</Button>
+					<Button compact onClick={ this.addMethod }>{ translate( 'Add another shipping method' ) }</Button>
 				</FormFieldSet>
 			</Dialog>
 		);
 	}
 }
 
-export default ShippingZoneDialog;
+export default localize( ShippingZoneDialog );
