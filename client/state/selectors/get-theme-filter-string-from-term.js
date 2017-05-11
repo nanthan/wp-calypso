@@ -23,11 +23,10 @@ export default function getThemeFilterStringFromTerm( state, term ) {
 	const terms = getThemeFilterTermsTable( state );
 	const taxonomy = terms[ term ];
 
-	if ( includes( taxonomy, ':' ) ) {
-		return taxonomy;
-	}
-
 	if ( taxonomy ) {
+		if ( includes( term, ':' ) ) {
+			return term;
+		}
 		return `${ taxonomy }:${ term }`;
 	}
 
