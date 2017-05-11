@@ -13,13 +13,15 @@ import PaymentLogo from 'components/payment-logo';
 
 class ShippingCard extends Component {
 	render() {
-		const { type, digits, name, date } = this.props;
+		const { selected, type, digits, name, date, onSelect } = this.props;
 		const __ = i18n.translate;
 
 		return (
 			<CompactCard className="shipping__card">
 				<FormCheckbox
 					className="shipping__card-checkbox"
+					checked={ selected }
+					onChange={ onSelect }
 				/>
 				<div className="shipping__card-info">
 					<PaymentLogo className="shipping__card-logo" type={ type.toLowerCase() } />
@@ -28,7 +30,10 @@ class ShippingCard extends Component {
 						<p className="shipping__card-name">{ name }</p>
 					</div>
 					<div className="shipping__card-date">
-						{ __( 'Expires %(date)s', { args: { date } } ) }
+						{ __( 'Expires %(date)s', {
+							args: { date: date },
+							context: 'date is of the form MM/YY'
+						} ) }
 					</div>
 				</div>
 			</CompactCard>

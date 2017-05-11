@@ -24,19 +24,48 @@ class ShippingLabels extends Component {
 		//TODO: use redux state with real data
 		this.state = {
 			visible: true,
-			cardData: {
+			cards: [ {
+				selected: true,
 				type: 'VISA',
 				digits: '1234',
 				name: 'Name Surname',
 				date: '12/19'
-			}
+			}, {
+				selected: false,
+				type: 'MasterCard',
+				digits: '5678',
+				name: 'Name Surname',
+				date: '01/20'
+			} ]
 		};
 
 		this.onToggle = this.onToggle.bind( this );
+		this.renderCard = this.renderCard.bind( this );
 	}
 
 	onToggle() {
 		this.setState( { visible: ! this.state.visible } );
+	}
+
+	selectCard( index ) {
+		const cards = this.state.cards.map( ( card ) => {
+			return { ...card, selected: false };
+		} );
+
+		cards[ index ].selected = true;
+
+		this.setState( { cards } );
+	}
+
+	renderCard( card, index ) {
+		const onSelect = () => {
+			this.selectCard( index );
+		};
+
+		return ( <ShippingCard
+			key={ index }
+			onSelect={ onSelect }
+			{ ...card } /> );
 	}
 
 	render() {
@@ -71,9 +100,7 @@ class ShippingLabels extends Component {
 						<p className="shipping__header-description shipping__credit-card-description">
 							{ __( 'Use your credit card on file to pay for the labels you print or add a new one.' ) }
 						</p>
-
-						<ShippingCard { ...this.state.cardData } />
-
+						{ this.state.cards.map( this.renderCard ) }
 						<Button compact>{ __( 'Add another credit card' ) }</Button>
 					</FormFieldSet>
 				</Card>
