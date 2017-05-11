@@ -38,7 +38,8 @@ import {
 	getSiteSelectedPlan,
 	isRemoteSiteOnSitesList,
 	getGlobalSelectedPlan,
-	getAuthAttempts
+	getAuthAttempts,
+	getSiteIdFromQueryObject
 } from 'state/jetpack-connect/selectors';
 import JetpackConnectNotices from './jetpack-connect-notices';
 import observe from 'lib/mixins/data-observe';
@@ -53,7 +54,7 @@ import versionCompare from 'lib/version-compare';
 import EmptyContent from 'components/empty-content';
 import Button from 'components/button';
 import { requestSites } from 'state/sites/actions';
-import { isRequestingSites } from 'state/sites/selectors';
+import { isRequestingSite } from 'state/sites/selectors';
 import MainWrapper from './main-wrapper';
 import HelpButton from './help-button';
 import { urlToSlug } from 'lib/url';
@@ -276,7 +277,7 @@ const LoggedInForm = React.createClass( {
 		} = this.props.jetpackConnectAuthorize;
 
 		if ( ! this.props.isAlreadyOnSitesList &&
-			! this.props.isFetchingSites,
+			! this.props.isFetchingSite,
 			queryObject.already_authorized ) {
 			this.props.recordTracksEvent( 'calypso_jpc_back_wpadmin_click' );
 			return this.props.goBackToWpAdmin( queryObject.redirect_after_auth );
@@ -376,7 +377,7 @@ const LoggedInForm = React.createClass( {
 
 	renderNotices() {
 		const { authorizeError, queryObject, isAuthorizing, authorizeSuccess } = this.props.jetpackConnectAuthorize;
-		if ( queryObject.already_authorized && ! this.props.isFetchingSites && ! this.props.isAlreadyOnSitesList ) {
+		if ( queryObject.already_authorized && ! this.props.isFetchingSite && ! this.props.isAlreadyOnSitesList ) {
 			return <JetpackConnectNotices noticeType="alreadyConnectedByOtherUser" />;
 		}
 
@@ -419,7 +420,7 @@ const LoggedInForm = React.createClass( {
 		} = this.props.jetpackConnectAuthorize;
 
 		if ( ! this.props.isAlreadyOnSitesList &&
-			! this.props.isFetchingSites &&
+			! this.props.isFetchingSite &&
 			queryObject.already_authorized ) {
 			return this.translate( 'Go back to your site' );
 		}
@@ -428,7 +429,7 @@ const LoggedInForm = React.createClass( {
 			return this.translate( 'Try again' );
 		}
 
-		if ( this.props.isFetchingSites ) {
+		if ( this.props.isFetchingSite ) {
 			return this.translate( 'Preparing authorization' );
 		}
 
@@ -571,7 +572,7 @@ const LoggedInForm = React.createClass( {
 	renderStateAction() {
 		const { authorizeSuccess, siteReceived } = this.props.jetpackConnectAuthorize;
 		if (
-			this.props.isFetchingSites ||
+			this.props.isFetchingSite ||
 			this.isAuthorizing() ||
 			this.retryingAuth ||
 			( authorizeSuccess && ! siteReceived )
@@ -712,6 +713,7 @@ export default connect(
 			return hasExpiredSecretError( state );
 		};
 		const selectedPlan = getSiteSelectedPlan( state, siteSlug ) || getGlobalSelectedPlan( state );
+		const siteId = getSiteIdFromQueryObject( state );
 
 		return {
 			siteSlug,
@@ -720,7 +722,7 @@ export default connect(
 			plansFirst: false,
 			jetpackSSOSessions: getSSOSessions( state ),
 			isAlreadyOnSitesList: isRemoteSiteOnSitesList( state ),
-			isFetchingSites: isRequestingSites( state ),
+			isFetchingSite: isRequestingSite( state, siteId ),
 			requestHasXmlrpcError,
 			requestHasExpiredSecretError,
 			calypsoStartedConnection: isCalypsoStartedConnection( state, remoteSiteUrl ),
