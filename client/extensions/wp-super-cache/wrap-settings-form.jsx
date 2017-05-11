@@ -23,10 +23,7 @@ import {
 	getSelectedSite,
 	getSelectedSiteId,
 } from 'state/ui/selectors';
-import {
-	deleteCache,
-	testCache,
-} from './state/cache/actions';
+import { deleteCache } from './state/cache/actions';
 import {
 	errorNotice,
 	removeNotice,
@@ -34,11 +31,8 @@ import {
 } from 'state/notices/actions';
 import { saveSettings } from './state/settings/actions';
 import {
-	getCacheTestResults,
 	isCacheDeleteSuccessful,
-	isCacheTestSuccessful,
 	isDeletingCache,
-	isTestingCache,
 } from './state/cache/selectors';
 import { getNotices } from './state/notices/selectors';
 import {
@@ -84,7 +78,6 @@ const wrapSettingsForm = getFormSettings => SettingsForm => {
 			}
 
 			this.showCacheDeleteNotice( prevProps );
-			this.showCacheTestNotice( prevProps );
 		}
 
 		updateDirtyFields() {
@@ -137,37 +130,6 @@ const wrapSettingsForm = getFormSettings => SettingsForm => {
 				);
 			}
 		};
-
-		showCacheTestNotice = ( prevProps ) => {
-			if ( this.props.isTesting || ! prevProps.isTesting ) {
-				return;
-			}
-
-			const {
-				isTestSuccessful,
-				site,
-				translate,
-			} = this.props;
-
-			this.props.removeNotice( 'wpsc-settings-save' );
-
-			if ( isTestSuccessful ) {
-				this.props.successNotice(
-					translate( 'Cache test completed successfully on %(site)s.', { args: { site: site && site.title } } ),
-					{ id: 'wpsc-cache-test' }
-				);
-			} else {
-				this.props.errorNotice(
-					translate( 'There was a problem testing the cache. Please try again.' ),
-					{ id: 'wpsc-cache-test' }
-				);
-			}
-		};
-
-		removeCacheNotices = () => {
-			this.props.removeNotice( 'wpsc-cache-delete' );
-			this.props.removeNotice( 'wpsc-cache-test' );
-		}
 
 		handleChange = field => event => {
 			this.props.updateFields( { [ field ]: event.target.value } );
@@ -226,19 +188,14 @@ const wrapSettingsForm = getFormSettings => SettingsForm => {
 				siteId,
 			} = this.props;
 
-			this.removeCacheNotices();
+			this.props.removeNotice( 'wpsc-cache-delete' );
 			this.props.removeNotice( 'wpsc-settings-save' );
 			this.props.saveSettings( siteId, pick( fields, settingsFields ) );
 		};
 
 		handleDeleteCache = ( deleteAll, deleteExpired ) => {
-			this.removeCacheNotices();
+			this.props.removeNotice( 'wpsc-cache-delete' );
 			this.props.deleteCache( this.props.siteId, deleteAll, deleteExpired );
-		}
-
-		handleTestCache = httpOnly => {
-			this.removeCacheNotices();
-			this.props.testCache( this.props.siteId, httpOnly );
 		}
 
 		render() {
@@ -249,7 +206,6 @@ const wrapSettingsForm = getFormSettings => SettingsForm => {
 				handleRadio: this.handleRadio,
 				handleSelect: this.handleSelect,
 				handleSubmitForm: this.handleSubmitForm,
-				handleTestCache: this.handleTestCache,
 				handleToggle: this.handleToggle,
 				setFieldValue: this.setFieldValue,
 				setFieldArrayValue: this.setFieldArrayValue,
@@ -295,19 +251,13 @@ const wrapSettingsForm = getFormSettings => SettingsForm => {
 			] ) );
 			const isDeleting = isDeletingCache( state, siteId );
 			const isDeleteSuccessful = isCacheDeleteSuccessful( state, siteId );
-			const isTesting = isTestingCache( state, siteId );
-			const isTestSuccessful = isCacheTestSuccessful( state, siteId );
-			const cacheTestResults = getCacheTestResults( state, siteId );
 
 			return {
-				cacheTestResults,
 				isDeleteSuccessful,
 				isDeleting,
 				isRequesting,
 				isSaveSuccessful,
 				isSaving,
-				isTesting,
-				isTestSuccessful,
 				notices,
 				settings,
 				settingsFields,
@@ -321,7 +271,6 @@ const wrapSettingsForm = getFormSettings => SettingsForm => {
 			removeNotice,
 			saveSettings,
 			successNotice,
-			testCache,
 		}
 	);
 
