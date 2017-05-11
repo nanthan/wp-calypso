@@ -9,7 +9,7 @@ import { localize } from 'i18n-calypso';
  */
 import Button from 'components/button';
 import Card from 'components/card';
-import ShippingHeader from './shipping-header';
+import ExtendedHeader from '../../../components/extended-header';
 import ShippingPackage from './shipping-package';
 
 class ShippingPackageList extends Component {
@@ -39,11 +39,11 @@ class ShippingPackageList extends Component {
 
 		return (
 			<div>
-				<ShippingHeader
+				<ExtendedHeader
 					label={ translate( 'Packages' ) }
 					description={ translate( 'Add frequently used packages to make fulfillment easier.' ) }>
 					<Button>{ translate( 'Add package' ) }</Button>
-				</ShippingHeader>
+				</ExtendedHeader>
 				<Card className="shipping__packages">
 					<div className="shipping__packages-row shipping__packages-header">
 						<div className="shipping__packages-row-icon"></div>

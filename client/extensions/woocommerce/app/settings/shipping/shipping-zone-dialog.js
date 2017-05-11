@@ -100,7 +100,7 @@ class ShippingZoneDialog extends Component {
 				isVisible={ isVisible }
 				buttons={ buttons }
 				onClose={ onClose } >
-				<div className="shipping__header">{ translate( 'Add new shipping zone' ) }</div>
+				<div className="shipping__zone-dialog-header">{ translate( 'Add new shipping zone' ) }</div>
 				<FormFieldSet>
 					<FormLabel htmlFor="zone-name">{ translate( 'Shipping zone name' ) }</FormLabel>
 					<FormTextInput

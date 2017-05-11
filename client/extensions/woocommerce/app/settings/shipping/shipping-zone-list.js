@@ -9,7 +9,7 @@ import { localize } from 'i18n-calypso';
  */
 import Button from 'components/button';
 import Card from 'components/card';
-import ShippingHeader from './shipping-header';
+import ExtendedHeader from '../../../components/extended-header';
 import ShippingZone from './shipping-zone';
 import ShippingZoneDialog from './shipping-zone-dialog';
 
@@ -56,11 +56,11 @@ class ShippingZoneList extends Component {
 
 		return (
 			<div>
-				<ShippingHeader
+				<ExtendedHeader
 					label={ translate( 'Shipping Zones' ) }
 					description={ translate( 'The regions you ship to and the methods you will provide.' ) }>
 					<Button onClick={ this.onAddZoneOpen }>{ translate( 'Add zone' ) }</Button>
-				</ShippingHeader>
+				</ExtendedHeader>
 				<Card className="shipping__zones">
 					<div className="shipping__zones-row shipping__zones-header">
 						<div className="shipping__zones-row-icon"></div>

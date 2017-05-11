@@ -8,8 +8,8 @@ import { localize } from 'i18n-calypso';
  * Internal dependencies
  */
 import Card from 'components/card';
+import ExtendedHeader from '../../../components/extended-header';
 import Notice from 'components/notice';
-import ShippingHeader from './shipping-header';
 
 class ShippingOrigin extends Component {
 	constructor( props ) {
@@ -31,7 +31,7 @@ class ShippingOrigin extends Component {
 
 		return (
 			<div>
-				<ShippingHeader
+				<ExtendedHeader
 					label={ translate( 'Shipping Origin' ) }
 					description={ translate( 'The address of where you will be shipping from.' ) } />
 				<Notice

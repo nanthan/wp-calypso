@@ -10,12 +10,12 @@ import { localize } from 'i18n-calypso';
  */
 import Button from 'components/button';
 import Card from 'components/card';
+import ExtendedHeader from '../../../components/extended-header';
 import FormFieldSet from 'components/forms/form-fieldset';
 import FormLabel from 'components/forms/form-label';
 import FormSelect from 'components/forms/form-select';
 import FormToggle from 'components/forms/form-toggle';
 import ShippingCard from './shipping-card';
-import ShippingHeader from './shipping-header';
 
 class ShippingLabels extends Component {
 	constructor( props ) {
@@ -73,11 +73,11 @@ class ShippingLabels extends Component {
 
 		return (
 			<div>
-				<ShippingHeader
+				<ExtendedHeader
 					label={ translate( 'Shipping Labels' ) }
 					description={ translate( 'Print shipping labels yourself.' ) }>
 					<FormToggle onChange={ this.onToggle } checked={ this.state.visible } />
-				</ShippingHeader>
+				</ExtendedHeader>
 				<Card className={ classNames( 'shipping__labels-container', { hidden: ! this.state.visible } ) }>
 					<FormFieldSet>
 						<FormLabel
