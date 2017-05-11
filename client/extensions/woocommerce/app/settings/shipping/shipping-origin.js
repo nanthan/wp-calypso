@@ -7,6 +7,7 @@ import { localize } from 'i18n-calypso';
 /**
  * Internal dependencies
  */
+import AddressView from '../../../components/address-view';
 import Card from 'components/card';
 import ExtendedHeader from '../../../components/extended-header';
 import Notice from 'components/notice';
@@ -41,13 +42,7 @@ class ShippingOrigin extends Component {
 					showDismiss={ true } >
 				</Notice>
 				<Card>
-					<div className="shipping__address">
-						<p className="shipping__address-name">{ this.state.address.name }</p>
-						<p>{ this.state.address.street }</p>
-						<p>{ this.state.address.city }</p>
-						<p>{ this.state.address.country }</p>
-					</div>
-					<a>{ translate( 'Edit address' ) }</a>
+					<AddressView address={ this.state.address } />
 				</Card>
 			</div>
 		);
