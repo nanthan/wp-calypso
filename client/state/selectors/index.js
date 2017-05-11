@@ -86,6 +86,7 @@ export getSites from './get-sites';
 export getSiteSlugsForUpcomingTransactions from './get-site-slugs-for-upcoming-transactions';
 export getThemeFilters from './get-theme-filters';
 export getThemeFilterTerm from './get-theme-filter-term';
+export getThemeFilterTermFromString from './get-theme-filter-term-from-string';
 export getThemeFilterTerms from './get-theme-filter-terms';
 export getThemeShowcaseDescription from './get-theme-showcase-description';
 export getThemeShowcaseTitle from './get-theme-showcase-title';
