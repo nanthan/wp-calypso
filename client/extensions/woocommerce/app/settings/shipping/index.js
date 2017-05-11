@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import React, { Component } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
 /**
@@ -13,17 +13,15 @@ import ShippingOrigin from './shipping-origin';
 import ShippingPackageList from './shipping-package-list';
 import ShippingZoneList from './shipping-zone-list';
 
-class Shipping extends Component {
-	render() {
-		return (
-			<Main className={ classNames( 'shipping', this.props.className ) }>
-				<ShippingOrigin />
-				<ShippingZoneList />
-				<ShippingLabels />
-				<ShippingPackageList />
-			</Main>
-		);
-	}
-}
+const Shipping = ( { className } ) => {
+	return (
+		<Main className={ classNames( 'shipping', className ) }>
+			<ShippingOrigin />
+			<ShippingZoneList />
+			<ShippingLabels />
+			<ShippingPackageList />
+		</Main>
+	);
+};
 
 export default Shipping;

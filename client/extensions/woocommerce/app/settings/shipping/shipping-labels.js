@@ -94,7 +94,7 @@ class ShippingLabels extends Component {
 							className="shipping__cards-label">
 							{ translate( 'Credit card' ) }
 						</FormLabel>
-						<p className="shipping__header-description shipping__credit-card-description">
+						<p className="shipping__credit-card-description">
 							{ translate( 'Use your credit card on file to pay for the labels you print or add a new one.' ) }
 						</p>
 						{ this.state.cards.map( renderCard ) }

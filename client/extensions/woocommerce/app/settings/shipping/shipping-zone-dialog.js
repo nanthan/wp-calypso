@@ -2,7 +2,6 @@
  * External dependencies
  */
 import React, { Component } from 'react';
-import clone from 'lodash/clone';
 import { localize } from 'i18n-calypso';
 
 /**
@@ -36,15 +35,16 @@ class ShippingZoneDialog extends Component {
 
 		this.state = {
 			location: [],
-			shippingMethods: [ clone( this.freeShippingDefaults ) ] };
+			shippingMethods: [ { ...this.freeShippingDefaults } ]
+		};
 	}
 
 	changeShippingMethod( index, value ) {
 		const shippingMethods = this.state.shippingMethods;
 		if ( 'free' === value ) {
-			shippingMethods[ index ] = clone( this.freeShippingDefaults );
+			shippingMethods[ index ] = { ...this.freeShippingDefaults };
 		} else {
-			shippingMethods[ index ] = clone( this.localPickupDefaults );
+			shippingMethods[ index ] = { ...this.localPickupDefaults };
 		}
 
 		this.setState( { shippingMethods } );
@@ -63,7 +63,7 @@ class ShippingZoneDialog extends Component {
 
 		const addMethod = () => {
 			const shippingMethods = this.state.shippingMethods;
-			shippingMethods.push( clone( this.freeShippingDefaults ) );
+			shippingMethods.push( { ...this.freeShippingDefaults } );
 			this.setState( { shippingMethods } );
 		};
 
