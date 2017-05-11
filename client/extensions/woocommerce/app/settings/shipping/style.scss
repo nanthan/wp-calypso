@@ -144,8 +144,20 @@
 	text-align: center;
 }
 
-.shipping__zone-dialog {
+&.shipping__zone-dialog {
 	max-width: 600px;
+	max-height: 80%;
+	display: flex;
+	flex-direction: column;
+
+	.dialog__content {
+		height: 100%;
+		overflow-y: scroll;
+	}
+
+	.dialog__action-buttons {
+		overflow: visible;
+	}
 }
 
 .shipping__zone-dialog-header {
