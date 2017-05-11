@@ -12,6 +12,7 @@ import {
 	omit,
 	reduce,
 } from 'lodash';
+import i18n from 'i18n-calypso';
 
 /**
  * Internal dependencies
@@ -195,7 +196,7 @@ export default React.createClass( {
 	renderSubmitButton() {
 		return (
 			<FormButton className="checkout__domain-details-form-submit-button" onClick={ this.handleSubmitButtonClick }>
-				{ this.translate( 'Continue to Checkout' ) }
+				{ i18n.translate( 'Continue to Checkout' ) }
 			</FormButton>
 		);
 	},
@@ -222,18 +223,18 @@ export default React.createClass( {
 			<div>
 				<Input
 					autoFocus
-					label={ this.translate( 'First Name') }
+					label={ i18n.translate( 'First Name' ) }
 					{ ...this.getFieldProps( 'first-name' ) } />
 
-				<Input label={ this.translate( 'Last Name' ) } { ...this.getFieldProps( 'last-name' ) } />
+				<Input label={ i18n.translate( 'Last Name' ) } { ...this.getFieldProps( 'last-name' ) } />
 			</div>
 		);
 	},
 
 	renderOrganizationField() {
 		return <HiddenInput
-			label={ this.translate( 'Organization' ) }
-			text={ this.translate(
+			label={ i18n.translate( 'Organization' ) }
+			text={ i18n.translate(
 				'Registering this domain for a company? + Add Organization Name',
 				'Registering these domains for a company? + Add Organization Name',
 				{
@@ -245,14 +246,14 @@ export default React.createClass( {
 
 	renderEmailField() {
 		return (
-			<Input label={ this.translate( 'Email' ) } { ...this.getFieldProps( 'email' ) } />
+			<Input label={ i18n.translate( 'Email' ) } { ...this.getFieldProps( 'email' ) } />
 		);
 	},
 
 	renderCountryField() {
 		return (
 			<CountrySelect
-				label={ this.translate( 'Country' ) }
+				label={ i18n.translate( 'Country' ) }
 				countriesList={ countriesList }
 				{ ...this.getFieldProps( 'country-code' ) } />
 		);
@@ -260,12 +261,12 @@ export default React.createClass( {
 
 	renderFaxField() {
 		return (
-			<Input label={ this.translate( 'Fax' ) } { ...this.getFieldProps( 'fax' ) } />
+			<Input label={ i18n.translate( 'Fax' ) } { ...this.getFieldProps( 'fax' ) } />
 		);
 	},
 
 	renderPhoneField() {
-		const label = this.translate( 'Phone' );
+		const label = i18n.translate( 'Phone' );
 
 		return (
 			<FormPhoneMediaInput
@@ -280,11 +281,11 @@ export default React.createClass( {
 	renderAddressFields() {
 		return (
 			<div>
-				<Input label={ this.translate( 'Address' ) } maxLength={ 40 } { ...this.getFieldProps( 'address-1' ) }/>
+				<Input label={ i18n.translate( 'Address' ) } maxLength={ 40 } { ...this.getFieldProps( 'address-1' ) } />
 
 				<HiddenInput
-					label={ this.translate( 'Address Line 2' ) }
-					text={ this.translate( '+ Add Address Line 2' ) }
+					label={ i18n.translate( 'Address Line 2' ) }
+					text={ i18n.translate( '+ Add Address Line 2' ) }
 					maxLength={ 40 }
 					{ ...this.getFieldProps( 'address-2' ) } />
 			</div>
@@ -293,7 +294,7 @@ export default React.createClass( {
 
 	renderCityField() {
 		return (
-			<Input label={ this.translate( 'City' ) } { ...this.getFieldProps( 'city' ) } />
+			<Input label={ i18n.translate( 'City' ) } { ...this.getFieldProps( 'city' ) } />
 		);
 	},
 
@@ -301,14 +302,14 @@ export default React.createClass( {
 		const countryCode = formState.getFieldValue( this.state.form, 'countryCode' );
 
 		return <StateSelect
-			label={ this.translate( 'State' ) }
+			label={ i18n.translate( 'State' ) }
 			countryCode={ countryCode }
 			{ ...this.getFieldProps( 'state' ) } />;
 	},
 
 	renderPostalCodeField() {
 		return (
-			<Input label={ this.translate( 'Postal Code' ) } { ...this.getFieldProps( 'postal-code' ) } />
+			<Input label={ i18n.translate( 'Postal Code' ) } { ...this.getFieldProps( 'postal-code' ) } />
 		);
 	},
 
@@ -428,9 +429,9 @@ export default React.createClass( {
 
 		let title;
 		if ( needsOnlyGoogleAppsDetails ) {
-			title = this.translate( 'G Suite Account Information' );
+			title = i18n.translate( 'G Suite Account Information' );
 		} else {
-			title = this.translate( 'Domain Contact Information' );
+			title = i18n.translate( 'Domain Contact Information' );
 		}
 
 		return (
