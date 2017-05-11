@@ -2,6 +2,7 @@
  * External dependencies
  */
 import React, { Component } from 'react';
+import classNames from 'classnames';
 
 /**
  * Internal dependencies
@@ -15,7 +16,7 @@ import ShippingZoneList from './shipping-zone-list';
 class Shipping extends Component {
 	render() {
 		return (
-			<Main className="woocommerce shipping">
+			<Main className={ classNames( 'shipping', this.props.className ) }>
 				<ShippingOrigin />
 				<ShippingZoneList />
 				<ShippingLabels />
