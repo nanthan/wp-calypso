@@ -38,13 +38,6 @@ class ShippingLabels extends Component {
 				date: '01/20'
 			} ]
 		};
-
-		this.onToggle = this.onToggle.bind( this );
-		this.renderCard = this.renderCard.bind( this );
-	}
-
-	onToggle() {
-		this.setState( { visible: ! this.state.visible } );
 	}
 
 	selectCard( index ) {
@@ -57,26 +50,30 @@ class ShippingLabels extends Component {
 		this.setState( { cards } );
 	}
 
-	renderCard( card, index ) {
-		const onSelect = () => {
-			this.selectCard( index );
-		};
-
-		return ( <ShippingCard
-			key={ index }
-			onSelect={ onSelect }
-			{ ...card } /> );
-	}
-
 	render() {
 		const { translate } = this.props;
+
+		const onToggle = () => {
+			this.setState( { visible: ! this.state.visible } );
+		};
+
+		const renderCard = ( card, index ) => {
+			const onSelect = () => {
+				this.selectCard( index );
+			};
+
+			return ( <ShippingCard
+				key={ index }
+				onSelect={ onSelect }
+				{ ...card } /> );
+		};
 
 		return (
 			<div>
 				<ExtendedHeader
 					label={ translate( 'Shipping Labels' ) }
 					description={ translate( 'Print shipping labels yourself.' ) }>
-					<FormToggle onChange={ this.onToggle } checked={ this.state.visible } />
+					<FormToggle onChange={ onToggle } checked={ this.state.visible } />
 				</ExtendedHeader>
 				<Card className={ classNames( 'shipping__labels-container', { hidden: ! this.state.visible } ) }>
 					<FormFieldSet>
@@ -100,7 +97,7 @@ class ShippingLabels extends Component {
 						<p className="shipping__header-description shipping__credit-card-description">
 							{ translate( 'Use your credit card on file to pay for the labels you print or add a new one.' ) }
 						</p>
-						{ this.state.cards.map( this.renderCard ) }
+						{ this.state.cards.map( renderCard ) }
 						<Button compact>{ translate( 'Add another credit card' ) }</Button>
 					</FormFieldSet>
 				</Card>

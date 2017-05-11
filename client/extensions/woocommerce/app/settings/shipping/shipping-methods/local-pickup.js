@@ -23,16 +23,14 @@ class LocalPickupMethod extends Component {
 			currencySymbolSuffix: '',
 			...props
 		};
-
-		this.toggleTooltip = this.toggleTooltip.bind( this );
-	}
-
-	toggleTooltip() {
-		this.setState( { showTooltip: ! this.state.showTooltip } );
 	}
 
 	render() {
 		const { translate } = this.props;
+
+		const toggleTooltip = () => {
+			this.setState( { showTooltip: ! this.state.showTooltip } );
+		};
 
 		return (
 			<div className="shipping-methods__method-container shipping-methods__local-pickup">
@@ -51,8 +49,8 @@ class LocalPickupMethod extends Component {
 					<span
 						className="shipping-methods__local-pickup-taxable-help"
 						ref="taxableHelp"
-						onMouseEnter={ this.toggleTooltip }
-						onMouseLeave={ this.toggleTooltip } >
+						onMouseEnter={ toggleTooltip }
+						onMouseLeave={ toggleTooltip } >
 					<Gridicon icon="help-outline" size={ 18 } />
 					</span>
 					<Tooltip

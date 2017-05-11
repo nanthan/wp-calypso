@@ -37,20 +37,6 @@ class ShippingZoneDialog extends Component {
 		this.state = {
 			location: [],
 			shippingMethods: [ clone( this.freeShippingDefaults ) ] };
-
-		this.onLocationChange = this.onLocationChange.bind( this );
-		this.renderShippingMethod = this.renderShippingMethod.bind( this );
-		this.addMethod = this.addMethod.bind( this );
-	}
-
-	onLocationChange( location ) {
-		this.setState( { location } );
-	}
-
-	addMethod() {
-		const shippingMethods = this.state.shippingMethods;
-		shippingMethods.push( clone( this.freeShippingDefaults ) );
-		this.setState( { shippingMethods } );
 	}
 
 	changeShippingMethod( index, value ) {
@@ -64,35 +50,44 @@ class ShippingZoneDialog extends Component {
 		this.setState( { shippingMethods } );
 	}
 
-	renderShippingMethod( method, index ) {
-		const { methodId } = method;
-		const { translate } = this.props;
-
-		const onMethodChange = ( event ) => {
-			this.changeShippingMethod( index, event.target.value );
-		};
-
-		return (
-			<div key={ index }>
-				<FormSelect
-					value={ methodId }
-					onChange={ onMethodChange } >
-					<option value="free">{ translate( 'Free shipping' ) }</option>
-					<option value="local">{ translate( 'Local pickup' ) }</option>
-				</FormSelect>
-				{ 'free' === methodId
-					? <FreeShippingMethod { ...method } />
-					: <LocalPickupMethod { ...method } /> }
-			</div>
-		);
-	}
-
 	render() {
 		const { translate, isVisible, onClose } = this.props;
 		const buttons = [
 			{ action: 'cancel', label: translate( 'Cancel' ) },
 			{ action: 'add', label: translate( 'Add zone' ), isPrimary: true },
 		];
+
+		const onLocationChange = ( location ) => {
+			this.setState( { location } );
+		};
+
+		const addMethod = () => {
+			const shippingMethods = this.state.shippingMethods;
+			shippingMethods.push( clone( this.freeShippingDefaults ) );
+			this.setState( { shippingMethods } );
+		};
+
+		const renderShippingMethod = ( method, index ) => {
+			const { methodId } = method;
+
+			const onMethodChange = ( event ) => {
+				this.changeShippingMethod( index, event.target.value );
+			};
+
+			return (
+				<div key={ index }>
+					<FormSelect
+						value={ methodId }
+						onChange={ onMethodChange } >
+						<option value="free">{ translate( 'Free shipping' ) }</option>
+						<option value="local">{ translate( 'Local pickup' ) }</option>
+					</FormSelect>
+					{ 'free' === methodId
+						? <FreeShippingMethod { ...method } />
+						: <LocalPickupMethod { ...method } /> }
+				</div>
+			);
+		};
 
 		return (
 			<Dialog
@@ -111,14 +106,14 @@ class ShippingZoneDialog extends Component {
 					<FormLabel>{ translate( 'Shipping location' ) }</FormLabel>
 					<TokenField
 						value={ this.state.location }
-						onChange={ this.onLocationChange } />
+						onChange={ onLocationChange } />
 				</FormFieldSet>
 				<div>
 					<FormLabel>{ translate( 'Shipping method' ) }</FormLabel>
-					{ this.state.shippingMethods.map( this.renderShippingMethod ) }
+					{ this.state.shippingMethods.map( renderShippingMethod ) }
 				</div>
 				<FormFieldSet>
-					<Button compact onClick={ this.addMethod }>{ translate( 'Add another shipping method' ) }</Button>
+					<Button compact onClick={ addMethod }>{ translate( 'Add another shipping method' ) }</Button>
 				</FormFieldSet>
 			</Dialog>
 		);

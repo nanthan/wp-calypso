@@ -34,17 +34,6 @@ class ShippingZoneList extends Component {
 				icon: 'globe'
 			} ],
 		};
-
-		this.onAddZoneOpen = this.onAddZoneOpen.bind( this );
-		this.onAddZoneClose = this.onAddZoneClose.bind( this );
-	}
-
-	onAddZoneOpen() {
-		this.setState( { showDialog: true } );
-	}
-
-	onAddZoneClose() {
-		this.setState( { showDialog: false } );
 	}
 
 	renderShippingZone( zone, index ) {
@@ -54,12 +43,20 @@ class ShippingZoneList extends Component {
 	render() {
 		const { translate } = this.props;
 
+		const onAddZoneOpen = () => {
+			this.setState( { showDialog: true } );
+		};
+
+		const onAddZoneClose = () => {
+			this.setState( { showDialog: false } );
+		};
+
 		return (
 			<div>
 				<ExtendedHeader
 					label={ translate( 'Shipping Zones' ) }
 					description={ translate( 'The regions you ship to and the methods you will provide.' ) }>
-					<Button onClick={ this.onAddZoneOpen }>{ translate( 'Add zone' ) }</Button>
+					<Button onClick={ onAddZoneOpen }>{ translate( 'Add zone' ) }</Button>
 				</ExtendedHeader>
 				<Card className="shipping__zones">
 					<div className="shipping__zones-row shipping__zones-header">
@@ -70,7 +67,7 @@ class ShippingZoneList extends Component {
 					</div>
 					{ this.state.shippingZones.map( this.renderShippingZone ) }
 				</Card>
-				<ShippingZoneDialog isVisible={ this.state.showDialog } onClose={ this.onAddZoneClose } />
+				<ShippingZoneDialog isVisible={ this.state.showDialog } onClose={ onAddZoneClose } />
 			</div>
 		);
 	}
