@@ -73,8 +73,12 @@
 	font-size: 13px;
 }
 
-.shipping__zones-row-method {
+.shipping__zones-row-methods {
 	width: 35%;
+}
+
+.shipping__zones-row-method:not( :last-child ) {
+	margin-bottom: 14px;
 }
 
 .shipping__zones-row-method-name {

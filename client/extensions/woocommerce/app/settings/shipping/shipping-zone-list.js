@@ -23,14 +23,21 @@ class ShippingZoneList extends Component {
 			shippingZones: [ {
 				locationName: 'United States',
 				locationDescription: '50 states',
-				methodName: 'USPS',
-				methodDescription: 'All domestic services',
+				methods: [ {
+					name: 'USPS',
+					description: 'All domestic services',
+				}, {
+					name: 'Flat Rate',
+					description: 'Minimum spend: $100',
+				} ],
 				icon: 'location'
 			}, {
 				locationName: 'Rest of the world',
 				locationDescription: '240 countries',
-				methodName: 'USPS',
-				methodDescription: 'All international services',
+				methods: [ {
+					name: 'USPS',
+					description: 'All international services',
+				} ],
 				icon: 'globe'
 			} ],
 		};
