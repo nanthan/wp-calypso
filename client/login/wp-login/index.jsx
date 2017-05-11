@@ -18,6 +18,7 @@ import {
 import config, { isEnabled } from 'config';
 import EmailedLoginLinkSuccessfully from '../magic-login/emailed-login-link-successfully';
 import EmailedLoginLinkExpired from '../magic-login/emailed-login-link-expired';
+import ExternalLink from 'components/external-link';
 import {
 	getMagicLoginEmailAddressFormInput,
 	getMagicLoginCurrentView,
@@ -108,6 +109,7 @@ class Login extends React.Component {
 			magicLoginEnabled,
 			magicLoginView,
 			translate,
+			twoFactorAuthType
 		} = this.props;
 
 		if ( magicLoginEnabled && magicLoginView === REQUEST_FORM ) {
@@ -135,10 +137,21 @@ class Login extends React.Component {
 				{ this.props.translate( 'Lost your password?' ) }
 			</a>;
 
+		let helpLink;
+		if ( twoFactorAuthType ) {
+			helpLink = <ExternalLink
+				icon={ true }
+				target="_blank"
+				href="http://en.support.wordpress.com/security/two-step-authentication/">
+				{ translate( 'Get help' ) }
+			</ExternalLink>;
+		}
+
 		return compact( [
 			goBackLink,
 			showMagicLoginLink,
 			resetPasswordLink,
+			helpLink
 		] );
 	}
 
