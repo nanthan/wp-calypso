@@ -18,6 +18,7 @@ import {
  */
 import { CountrySelect, StateSelect, Input, HiddenInput } from 'my-sites/upgrades/components/form';
 import PrivacyProtection from './privacy-protection';
+import ExtraContactInformationFrDialog from './extra-information-fr-dialog'; // TODO: Move to lib
 import PaymentBox from './payment-box';
 import { cartItems } from 'lib/cart-values';
 import { forDomainRegistrations as countriesListForDomainRegistrations } from 'lib/countries-list';
@@ -56,7 +57,8 @@ export default React.createClass( {
 			form: null,
 			isDialogVisible: false,
 			submissionCount: 0,
-			phoneCountryCode: 'US'
+			phoneCountryCode: 'US',
+			extra_registrant_info: false
 		};
 	},
 
@@ -184,6 +186,11 @@ export default React.createClass( {
 		};
 	},
 
+	needsExtraRegistrantInfo() {
+		// FIXME: Source from API
+		return cartItems.hasTld( this.props.cart, 'fr' ) && ! this.state.extra_registrant_info;
+	},
+
 	needsFax() {
 		return formState.getFieldValue( this.state.form, 'countryCode' ) === 'NL' && cartItems.hasTld( this.props.cart, 'nl' );
 	},
@@ -193,9 +200,14 @@ export default React.createClass( {
 	},
 
 	renderSubmitButton() {
+		const extraDialogRequired = this.needsExtraRegistrantInfo();
+		const continueText = extraDialogRequired
+			? this.translate( 'Continue to Checkout' )
+			: this.translate( 'Continue' );
+
 		return (
 			<FormButton className="checkout__domain-details-form-submit-button" onClick={ this.handleSubmitButtonClick }>
-				{ this.translate( 'Continue to Checkout' ) }
+				{ continueText }
 			</FormButton>
 		);
 	},
@@ -212,8 +224,23 @@ export default React.createClass( {
 				onDialogClose={ this.closeDialog }
 				onDialogOpen={ this.openDialog }
 				onDialogSelect={ this.handlePrivacyDialogSelect }
-				isDialogVisible={ this.state.isDialogVisible }
-				productsList={ this.props.productsList }/>
+				isDialogVisible={ this.state.isPrivacyDialogVisible }
+				productsList={ this.props.productsList } />
+		);
+	},
+
+	handleFrData( extraData ) {
+		console.log( 'extraData:', extraData );
+		this.setState( { extra_registrant_info: extraData } );
+		this.closeDialog( 'fr' );
+	},
+
+	renderExtraContactInformationFrDialog() {
+
+		return (
+			<ExtraContactInformationFrDialog
+				onDialogClose={ this.handleFrData }
+				isVisible={ this.state.isFrDialogVisible && this.needsExtraRegistrantInfo() } />
 		);
 	},
 
@@ -339,12 +366,12 @@ export default React.createClass( {
 		this.setPrivacyProtectionSubscriptions( ! this.allDomainRegistrationsHavePrivacy() );
 	},
 
-	closeDialog() {
-		this.setState( { isDialogVisible: false } );
+	closeDialog( dialogKey = 'isDialogVisible' ) {
+		this.setState( { [ dialogKey ]: false } );
 	},
 
-	openDialog() {
-		this.setState( { isDialogVisible: true } );
+	openDialog( dialogKey = 'isDialogVisible' ) {
+		this.setState( { [ dialogKey ]: true } );
 	},
 
 	focusFirstError() {
@@ -365,6 +392,10 @@ export default React.createClass( {
 			if ( ! this.allDomainRegistrationsHavePrivacy() ) {
 				this.openDialog();
 				return;
+			}
+
+			if ( this.needsExtraRegistrantInfo() ) {
+				this.openDialog( 'isFrDialogVisible' );
 			}
 
 			this.finish();
@@ -406,8 +437,13 @@ export default React.createClass( {
 	finish( options = {} ) {
 		this.setPrivacyProtectionSubscriptions( options.addPrivacy !== false );
 
-		const allFieldValues = Object.assign( {}, formState.getAllFieldValues( this.state.form ) );
+		const allFieldValues = Object.assign(
+			{},
+			formState.getAllFieldValues( this.state.form ),
+			this.state.registrant_extra_values ? {} : {}
+		);
 		allFieldValues.phone = toIcannFormat( allFieldValues.phone, countries[ this.state.phoneCountryCode ] );
+		// TODO: pass extra fr contact details in here
 		setDomainDetails( allFieldValues );
 		addGoogleAppsRegistrationData( allFieldValues );
 	},
@@ -441,6 +477,7 @@ export default React.createClass( {
 		return (
 			<div>
 				{ cartItems.hasDomainRegistration( this.props.cart ) && this.renderPrivacySection() }
+				{ this.renderExtraContactInformationFrDialog() }
 				<PaymentBox
 					classSet={ classSet }
 					title={ title }>
