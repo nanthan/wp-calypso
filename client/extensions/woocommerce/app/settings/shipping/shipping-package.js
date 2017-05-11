@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Gridicon from 'gridicons';
 import { localize } from 'i18n-calypso';
 
@@ -27,6 +27,12 @@ const ShippingPackage = ( { translate, type, name, dimensions } ) => {
 			</div>
 		</div>
 	);
+};
+
+ShippingPackage.propTypes = {
+	type: PropTypes.string,
+	name: PropTypes.string,
+	dimensions: PropTypes.string
 };
 
 export default localize( ShippingPackage );

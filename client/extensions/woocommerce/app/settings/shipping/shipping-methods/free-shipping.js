@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { localize } from 'i18n-calypso';
 
 /**
@@ -60,5 +60,9 @@ class FreeShippingMethod extends Component {
 		);
 	}
 }
+
+FreeShippingMethod.propTypes = {
+	everyone: PropTypes.bool.isRequired,
+};
 
 export default localize( FreeShippingMethod );

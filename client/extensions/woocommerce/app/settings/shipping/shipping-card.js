@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { localize } from 'i18n-calypso';
 
 /**
@@ -34,6 +34,15 @@ const ShippingCard = ( { translate, selected, type, digits, name, date, onSelect
 			</div>
 		</CompactCard>
 	);
+};
+
+ShippingCard.propTypes = {
+	selected: PropTypes.bool.isRequired,
+	type: PropTypes.string,
+	digits: PropTypes.string,
+	name: PropTypes.string,
+	date: PropTypes.string,
+	onSelect: PropTypes.func
 };
 
 export default localize( ShippingCard );

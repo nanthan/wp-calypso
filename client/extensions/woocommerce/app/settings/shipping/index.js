@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import React from 'react';
+import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 
 /**
@@ -22,6 +22,10 @@ const Shipping = ( { className } ) => {
 			<ShippingPackageList />
 		</Main>
 	);
+};
+
+Shipping.propTypes = {
+	className: PropTypes.string
 };
 
 export default Shipping;

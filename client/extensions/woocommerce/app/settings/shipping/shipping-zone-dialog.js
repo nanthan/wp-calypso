@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { localize } from 'i18n-calypso';
 
 /**
@@ -119,5 +119,10 @@ class ShippingZoneDialog extends Component {
 		);
 	}
 }
+
+ShippingZoneDialog.propTypes = {
+	isVisible: PropTypes.bool,
+	onClose: PropTypes.func
+};
 
 export default localize( ShippingZoneDialog );

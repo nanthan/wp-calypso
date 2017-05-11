@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Gridicon from 'gridicons';
 import { localize } from 'i18n-calypso';
 
@@ -29,6 +29,14 @@ const ShippingZone = ( { translate, locationName, locationDescription, methodNam
 			</div>
 		</div>
 	);
+};
+
+ShippingZone.propTypes = {
+	locationName: PropTypes.string,
+	locationDescription: PropTypes.string,
+	methodName: PropTypes.string,
+	methodDescription: PropTypes.string,
+	icon: PropTypes.string
 };
 
 export default localize( ShippingZone );
