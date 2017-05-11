@@ -42,7 +42,7 @@ function ReaderSubscriptionListItem( {
 	className = '',
 	translate,
 	followSource,
-	isEmailBlocked,
+	showEmailSettings,
 } ) {
 	const siteTitle = getSiteName( { feed, site } );
 	const siteAuthor = site && site.owner;
@@ -98,8 +98,13 @@ function ReaderSubscriptionListItem( {
 			) }
 			</div>
 			<div className="reader-subscription-list-item__options">
-				<FollowButton siteUrl={ feedUrl } followSource={ followSource } />
-				{ isFollowing && ! isEmailBlocked && <EmailSettings siteId={ siteId } /> }
+				<FollowButton
+					siteUrl={ feedUrl }
+					followSource={ followSource }
+					feedId={ feedId }
+					siteId={ siteId }
+				/>
+				{ isFollowing && showEmailSettings && <EmailSettings siteId={ siteId } /> }
 			</div>
 		</div>
 	);
