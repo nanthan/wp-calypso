@@ -7,10 +7,10 @@ import React, { Component } from 'react';
  * Internal dependencies
  */
 import Main from 'components/main';
-import ShippingOrigin from './shipping-origin';
-import ShippingZoneList from './shipping-zone-list';
 import ShippingLabels from './shipping-labels';
+import ShippingOrigin from './shipping-origin';
 import ShippingPackageList from './shipping-package-list';
+import ShippingZoneList from './shipping-zone-list';
 
 class Shipping extends Component {
 	render() {

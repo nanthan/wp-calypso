@@ -16,7 +16,11 @@ class FreeShippingMethod extends Component {
 		super( props );
 
 		//TODO: use redux state with real data
-		this.state = { everyone: props.everyone };
+		this.state = {
+			everyone: props.everyone,
+			currencySymbolPrefix: '$',
+			currencySymbolSuffix: ''
+		};
 
 		this.onOptionChange = this.onOptionChange.bind( this );
 	}
@@ -27,7 +31,10 @@ class FreeShippingMethod extends Component {
 
 	renderMinSpendBox() {
 		return (
-			<FormCurrencyInput currencySymbolPrefix="$" value={ this.state.minSpend } />
+			<FormCurrencyInput
+				currencySymbolPrefix={ this.state.currencySymbolPrefix }
+				currencySymbolSuffix={ this.state.currencySymbolSuffix }
+				value={ this.state.minSpend } />
 		);
 	}
 

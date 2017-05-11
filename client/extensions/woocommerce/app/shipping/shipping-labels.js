@@ -8,8 +8,8 @@ import classNames from 'classnames';
 /**
  * Internal dependencies
  */
-import Card from 'components/card';
 import Button from 'components/button';
+import Card from 'components/card';
 import FormFieldSet from 'components/forms/form-fieldset';
 import FormLabel from 'components/forms/form-label';
 import FormSelect from 'components/forms/form-select';

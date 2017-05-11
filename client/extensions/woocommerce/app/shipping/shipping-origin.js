@@ -8,8 +8,8 @@ import i18n from 'i18n-calypso';
  * Internal dependencies
  */
 import Card from 'components/card';
-import ShippingHeader from './shipping-header';
 import Notice from 'components/notice';
+import ShippingHeader from './shipping-header';
 
 class ShippingOrigin extends Component {
 	constructor( props ) {

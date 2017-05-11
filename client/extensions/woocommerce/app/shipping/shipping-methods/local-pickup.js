@@ -10,8 +10,8 @@ import Gridicon from 'gridicons';
  */
 import FormCurrencyInput from 'components/forms/form-currency-input';
 import FormCheckbox from 'components/forms/form-checkbox';
-import FormLabel from 'components/forms/form-label';
 import FormFieldSet from 'components/forms/form-fieldset';
+import FormLabel from 'components/forms/form-label';
 import Tooltip from 'components/tooltip';
 
 class LocalPickupMethod extends Component {
@@ -19,6 +19,8 @@ class LocalPickupMethod extends Component {
 		super( props );
 		this.state = {
 			showTooltip: false,
+			currencySymbolPrefix: '$',
+			currencySymbolSuffix: '',
 			...props
 		};
 
@@ -36,7 +38,10 @@ class LocalPickupMethod extends Component {
 			<div className="shipping-methods__method-container shipping-methods__local-pickup">
 				<FormFieldSet>
 					<FormLabel>{ __( 'How much will you charge for local pickup?' ) }</FormLabel>
-					<FormCurrencyInput currencySymbolPrefix="$" value={ this.state.price } />
+					<FormCurrencyInput
+						currencySymbolPrefix={ this.state.currencySymbolPrefix }
+						currencySymbolSuffix={ this.state.currencySymbolSuffix }
+						value={ this.state.price } />
 				</FormFieldSet>
 				<FormFieldSet>
 					<FormCheckbox
