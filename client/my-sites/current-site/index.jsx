@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
 import { localize } from 'i18n-calypso';
-
 /**
  * Internal dependencies
  */
@@ -14,17 +13,17 @@ const AllSites = require( 'my-sites/all-sites' ),
 	Button = require( 'components/button' ),
 	Card = require( 'components/card' ),
 	Site = require( 'blocks/site' ),
-	Gridicon = require( 'gridicons' ),
-	UpgradesActions = require( 'lib/upgrades/actions' ),
-	DomainsStore = require( 'lib/domains/store' ),
-	DomainWarnings = require( 'my-sites/upgrades/components/domain-warnings' );
+	Gridicon = require( 'gridicons' );
 
-import SiteNotice from './notice';
-import { setLayoutFocus } from 'state/ui/layout-focus/actions';
-import { getSelectedSite, getSelectedSiteId } from 'state/ui/selectors';
+import AsyncLoad from 'components/async-load';
 import { getCurrentUser } from 'state/current-user/selectors';
-import { isJetpackSite } from 'state/sites/selectors';
+import { getDecoratedSiteDomains } from 'state/sites/domains/selectors';
 import { getSelectedOrAllSites } from 'state/selectors';
+import { getSelectedSite, getSelectedSiteId } from 'state/ui/selectors';
+import { isJetpackSite } from 'state/sites/selectors';
+import QuerySiteDomains from 'components/data/query-site-domains';
+import { setLayoutFocus } from 'state/ui/layout-focus/actions';
+import SiteNotice from './notice';
 
 class CurrentSite extends Component {
 	static propTypes = {
@@ -38,54 +37,23 @@ class CurrentSite extends Component {
 		anySiteSelected: React.PropTypes.array
 	};
 
-	state = {
-		domainsStore: DomainsStore
-	};
-
-	componentWillMount() {
-		const { selectedSiteId, isJetpack } = this.props;
-		if ( selectedSiteId && ! isJetpack ) {
-			UpgradesActions.fetchDomains( selectedSiteId );
-		}
-
-		DomainsStore.on( 'change', this.handleStoreChange );
-	}
-
-	componentWillUnmount() {
-		DomainsStore.off( 'change', this.handleStoreChange );
-	}
-
-	componentDidUpdate( prevProps ) {
-		const { selectedSiteId, isJetpack } = this.props;
-		if ( selectedSiteId && ! isJetpack && selectedSiteId !== prevProps.selectedSiteId ) {
-			UpgradesActions.fetchDomains( selectedSiteId );
-		}
-	}
-
-	handleStoreChange = () => {
-		this.setState( { domainsStore: DomainsStore } );
-	}
-
 	switchSites = ( event ) => {
 		event.preventDefault();
 		event.stopPropagation();
 		this.props.setLayoutFocus( 'sites' );
 
 		analytics.ga.recordEvent( 'Sidebar', 'Clicked Switch Site' );
-	}
+	};
 
 	getDomainWarnings() {
-		const { selectedSiteId, selectedSite: site } = this.props;
+		const { domains, isJetpack, selectedSiteId, selectedSite: site } = this.props;
 
-		if ( ! selectedSiteId ) {
+		if ( ! selectedSiteId || isJetpack ) {
 			return null;
 		}
 
-		const domainStore = this.state.domainsStore.getBySite( selectedSiteId );
-		const domains = domainStore && domainStore.list || [];
-
 		return (
-			<DomainWarnings
+			<AsyncLoad require="my-sites/upgrades/components/domain-warnings"
 				isCompact
 				selectedSite={ site }
 				domains={ domains }
@@ -106,7 +74,7 @@ class CurrentSite extends Component {
 	previewSite = ( event ) => this.props.onClick && this.props.onClick( event );
 
 	render() {
-		const { isJetpack, selectedSite, translate, anySiteSelected } = this.props;
+		const { selectedSite, selectedSiteId, translate, anySiteSelected } = this.props;
 
 		if ( ! anySiteSelected.length ) {
 			return (
@@ -138,6 +106,7 @@ class CurrentSite extends Component {
 				}
 				{ selectedSite
 					? <div>
+						<QuerySiteDomains siteId={ selectedSiteId } />
 						<Site site={ selectedSite } />
 						<a
 							href={ selectedSite.URL }
@@ -152,7 +121,7 @@ class CurrentSite extends Component {
 					</div>
 					: <AllSites />
 				}
-				{ ! isJetpack && this.getDomainWarnings() }
+				{ this.getDomainWarnings() }
 				<SiteNotice site={ selectedSite } />
 			</Card>
 		);
@@ -165,6 +134,7 @@ export default connect(
 		const user = getCurrentUser( state );
 
 		return {
+			domains: getDecoratedSiteDomains( state, selectedSiteId ),
 			isJetpack: isJetpackSite( state, selectedSiteId ),
 			selectedSiteId,
 			selectedSite: getSelectedSite( state ),
