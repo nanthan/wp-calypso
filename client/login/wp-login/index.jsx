@@ -143,6 +143,7 @@ class Login extends React.Component {
 
 		const helpLink = twoFactorAuthType && (
 			<ExternalLink
+				key="help-link"
 				icon={ true }
 				target="_blank"
 				href="http://en.support.wordpress.com/security/two-step-authentication/">
