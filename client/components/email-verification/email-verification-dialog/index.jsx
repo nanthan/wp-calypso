@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import noop from 'lodash/noop';
-import i18n from 'i18n-calypso';
+import { localize } from 'i18n-calypso';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
 
@@ -23,12 +23,12 @@ class VerifyEmailDialog extends Component {
 
 	getResendButtonLabel() {
 		if ( this.props.emailSent || this.props.error ) {
-			return i18n.translate( 'Email Sent' );
+			return this.props.translate( 'Email Sent' );
 		}
 		if ( this.props.pendingRequest ) {
 			return <Spinner className="email-verification-dialog__confirmation-dialog-spinner" />;
 		}
-		return i18n.translate( 'Resend Email' );
+		return this.props.translate( 'Resend Email' );
 	}
 
 	handleClose = () => {
@@ -49,22 +49,22 @@ class VerifyEmailDialog extends Component {
 				key="close"
 				primary={ true }
 				onClick={ this.handleClose }>
-					{ i18n.translate( 'OK' ) }
+					{ this.props.translate( 'OK' ) }
 			</Button>
 		];
 	}
 
 	render() {
 		const strings = {
-			confirmHeading: i18n.translate( 'Please confirm your email address' ),
+			confirmHeading: this.props.translate( 'Please confirm your email address' ),
 
-			confirmExplanation: i18n.translate( 'We sent you an email when you first signed up. ' +
+			confirmExplanation: this.props.translate( 'We sent you an email when you first signed up. ' +
 				'Please open the message and click the blue button.' ),
 
-			confirmReasoning: i18n.translate( 'Email confirmation allows us to assist when recovering ' +
+			confirmReasoning: this.props.translate( 'Email confirmation allows us to assist when recovering ' +
 				'your account in the event you forget your password.' ),
 
-			confirmEmail: i18n.translate(
+			confirmEmail: this.props.translate(
 				'{{wrapper}}%(email)s{{/wrapper}} {{emailPreferences}}change{{/emailPreferences}}',
 				{
 					components: {
@@ -95,6 +95,7 @@ class VerifyEmailDialog extends Component {
 
 VerifyEmailDialog.propTypes = {
 	onClose: React.PropTypes.func,
+	translate: React.PropTypes.func,
 	// connected props:
 	email: React.PropTypes.string,
 	pendingRequest: React.PropTypes.bool,
@@ -117,4 +118,4 @@ export default connect(
 		verifyEmail,
 		resetVerifyEmailState,
 	}
-)( VerifyEmailDialog );
+)( localize( VerifyEmailDialog ) );
