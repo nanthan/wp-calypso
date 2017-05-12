@@ -196,6 +196,22 @@
 	overflow-x: auto;
 }
 
+.products__product-form-variation-table-shadow {
+	position: relative;
+	overflow: hidden;
+
+	&:after {
+		content: "";
+		display: block;
+		width: 24px;
+		height: 100%;
+		position: absolute;
+		right: -12px;
+		top: 0;
+		background: radial-gradient(ellipse at center, rgba(0,0,0,.125) 0%,rgba(255,255,255,0) 75%,rgba(255,255,255,0) 90%);
+	}
+}
+
 .products__product-form-variation-table-wrapper .form-text-input-with-affixes .form-text-input,
 .form-dimensions-input__length,
 .form-dimensions-input__width {
