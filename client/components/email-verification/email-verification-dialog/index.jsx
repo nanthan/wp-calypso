@@ -22,11 +22,11 @@ import {
 class VerifyEmailDialog extends Component {
 
 	getResendButtonLabel() {
-		if ( 'sent' === this.props.emailVerification ||
-			'error' === this.props.emailVerification ) {
+		if ( 'sent' === this.props.emailVerificationStatus ||
+			'error' === this.props.emailVerificationStatus ) {
 			return this.props.translate( 'Email Sent' );
 		}
-		if ( 'requesting' === this.props.emailVerification ) {
+		if ( 'requesting' === this.props.emailVerificationStatus ) {
 			return <Spinner className="email-verification-dialog__confirmation-dialog-spinner" />;
 		}
 		return this.props.translate( 'Resend Email' );
@@ -42,7 +42,7 @@ class VerifyEmailDialog extends Component {
 			<Button
 				key="resend"
 				primary={ false }
-				disabled={ includes( [ 'requesting', 'sent', 'error' ], this.props.emailVerification ) }
+				disabled={ includes( [ 'requesting', 'sent', 'error' ], this.props.emailVerificationStatus ) }
 				onClick={ this.props.verifyEmail }>
 				{ this.getResendButtonLabel() }
 			</Button>,
@@ -99,7 +99,7 @@ VerifyEmailDialog.propTypes = {
 	translate: React.PropTypes.func,
 	// connected props:
 	email: React.PropTypes.string,
-	emailVerification: React.PropTypes.string,
+	emailVerificationStatus: React.PropTypes.string,
 };
 
 VerifyEmailDialog.defaultProps = {
@@ -109,7 +109,7 @@ VerifyEmailDialog.defaultProps = {
 export default connect(
 	state => ( {
 		email: getCurrentUserEmail( state ),
-		emailVerification: get( state, 'currentUser.emailVerification.status' ),
+		emailVerificationStatus: get( state, 'currentUser.emailVerification.status' ),
 	} ),
 	{
 		verifyEmail,
