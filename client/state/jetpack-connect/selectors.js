@@ -154,6 +154,11 @@ const getSiteIdFromQueryObject = function( state ) {
 	return false;
 };
 
+const hasNewlyConnectedSite = function( state ) {
+	const jetpackConnectSitesList = get( state, [ 'jetpackConnect', 'jetpackConnectSitesList' ] );
+	return ( jetpackConnectSitesList && jetpackConnectSitesList.newSite );
+};
+
 export default {
 	getConnectingSite,
 	getAuthorizationData,
@@ -162,6 +167,7 @@ export default {
 	getSessions,
 	getSSOSessions,
 	getSSO,
+	hasNewlyConnectedSite,
 	isCalypsoStartedConnection,
 	isRedirectingToWpAdmin,
 	isRemoteSiteOnSitesList,

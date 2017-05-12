@@ -22,6 +22,7 @@ import {
 	hasXmlrpcError,
 	getAuthAttempts,
 	hasExpiredSecretError,
+	hasNewlyConnectedSite,
 	getSiteIdFromQueryObject
 } from '../selectors';
 
@@ -696,6 +697,22 @@ describe( 'selectors', () => {
 				}
 			};
 			expect( getSiteIdFromQueryObject( state ) ).to.equals( false );
+		} );
+	} );
+
+	describe( '#hasNewlyConnectedSite()', () => {
+		it( 'should be undefined with an empty state', () => {
+			const state = {};
+			expect( hasNewlyConnectedSite( state ) ).to.be.undefined;
+		} );
+
+		it( 'should be undefined when there is no new site', () => {
+			const state = { jetpackConnect: { jetpackConnectSitesList: {} } };
+			expect( hasNewlyConnectedSite( state ) ).to.be.undefined;
+		} );
+		it( 'should be true when there is a new site', () => {
+			const state = { jetpackConnect: { jetpackConnectSitesList: { newSite: true } } };
+			expect( hasNewlyConnectedSite( state ) ).to.be.true;
 		} );
 	} );
 } );
