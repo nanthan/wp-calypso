@@ -69,7 +69,7 @@ class ShippingZoneList extends Component {
 					<div className="shipping__zones-row shipping__zones-header">
 						<div className="shipping__zones-row-icon"></div>
 						<div className="shipping__zones-row-location">{ translate( 'Location' ) }</div>
-						<div className="shipping__zones-row-method">{ translate( 'Shipping method' ) }</div>
+						<div className="shipping__zones-row-methods">{ translate( 'Shipping methods' ) }</div>
 						<div className="shipping__zones-row-actions" />
 					</div>
 					{ this.state.shippingZones.map( this.renderShippingZone ) }
