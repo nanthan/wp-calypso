@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import noop from 'lodash/noop';
 import { localize } from 'i18n-calypso';
 import { connect } from 'react-redux';
-import { get } from 'lodash';
+import { get, includes } from 'lodash';
 
 /**
  * Internal dependencies
@@ -22,10 +22,11 @@ import {
 class VerifyEmailDialog extends Component {
 
 	getResendButtonLabel() {
-		if ( this.props.emailSent || this.props.error ) {
+		if ( 'sent' === this.props.emailVerification ||
+			'error' === this.props.emailVerification ) {
 			return this.props.translate( 'Email Sent' );
 		}
-		if ( this.props.pendingRequest ) {
+		if ( 'requesting' === this.props.emailVerification ) {
 			return <Spinner className="email-verification-dialog__confirmation-dialog-spinner" />;
 		}
 		return this.props.translate( 'Resend Email' );
@@ -41,7 +42,7 @@ class VerifyEmailDialog extends Component {
 			<Button
 				key="resend"
 				primary={ false }
-				disabled={ this.props.pendingRequest || this.props.emailSent || this.props.error }
+				disabled={ includes( [ 'requesting', 'sent', 'error' ], this.props.emailVerification ) }
 				onClick={ this.props.verifyEmail }>
 				{ this.getResendButtonLabel() }
 			</Button>,
@@ -98,9 +99,7 @@ VerifyEmailDialog.propTypes = {
 	translate: React.PropTypes.func,
 	// connected props:
 	email: React.PropTypes.string,
-	pendingRequest: React.PropTypes.bool,
-	emailSent: React.PropTypes.bool,
-	error: React.PropTypes.bool,
+	emailVerification: React.PropTypes.string,
 };
 
 VerifyEmailDialog.defaultProps = {
@@ -110,9 +109,7 @@ VerifyEmailDialog.defaultProps = {
 export default connect(
 	state => ( {
 		email: getCurrentUserEmail( state ),
-		pendingRequest: get( state, 'currentUser.emailVerification.pendingRequest' ),
-		emailSent: get( state, 'currentUser.emailVerification.emailSent' ),
-		error: get( state, 'currentUser.emailVerification.error' ),
+		emailVerification: get( state, 'currentUser.emailVerification.status' ),
 	} ),
 	{
 		verifyEmail,
