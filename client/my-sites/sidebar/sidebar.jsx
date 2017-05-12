@@ -322,7 +322,7 @@ export class MySitesSidebar extends Component {
 		const { canUserManageOptions, isJetpack, site, siteSuffix, translate } = this.props;
 		const storeLink = '/store' + siteSuffix;
 		const showStoreLink = config.isEnabled( 'woocommerce/extension-dashboard' ) &&
-			site && isBusiness( site.plan ) && isJetpack && canUserManageOptions;
+			site && isJetpack && canUserManageOptions;
 
 		return (
 			showStoreLink &&
