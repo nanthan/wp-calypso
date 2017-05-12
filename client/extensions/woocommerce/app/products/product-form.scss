@@ -173,11 +173,6 @@
 	&.products__product-price {
 		width: 80px;
 	}
-
-	&:first-child,
-	&:last-child {
-		min-width: 0;
-	}
 }
 
 .products__product-dimensions-input {
