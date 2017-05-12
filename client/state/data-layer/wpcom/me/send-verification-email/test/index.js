@@ -10,6 +10,8 @@ import { spy } from 'sinon';
 import { http } from 'state/data-layer/wpcom-http/actions';
 import {
 	requestEmailVerification,
+	handleSuccess,
+	handleError,
 } from '../';
 import {
 	EMAIL_VERIFY_REQUEST_SUCCESS,
@@ -30,14 +32,37 @@ describe( 'send-email-verification', () => {
 				apiVersion: '1.1',
 				method: 'POST',
 				path: '/me/send-verification-email',
-				onSuccess: { type: EMAIL_VERIFY_REQUEST_SUCCESS },
-				onFailure: { type: EMAIL_VERIFY_REQUEST_FAILURE }
-			} ) );
+			}, dummyAction ) );
 		} );
 
 		it( 'should pass the original action along the middleware chain', () => {
 			expect( nextSpy ).to.have.been.calledOnce;
 			expect( nextSpy ).to.have.been.calledWith( dummyAction );
+		} );
+	} );
+
+	describe( '#handleError', () => {
+		const dispatchSpy = spy();
+		const message = 'This is an error message.';
+		const rawError = Error( message );
+
+		handleError( { dispatch: dispatchSpy }, null, null, rawError );
+
+		it( 'should dispatch failure action with error message', () => {
+			expect( dispatchSpy ).to.have.been.calledWith( {
+				type: EMAIL_VERIFY_REQUEST_FAILURE,
+				message,
+			} );
+		} );
+	} );
+
+	describe( '#handleSuccess', () => {
+		const dispatchSpy = spy();
+
+		handleSuccess( { dispatch: dispatchSpy } );
+
+		it( 'should dispatch failure action with error message', () => {
+			expect( dispatchSpy ).to.have.been.calledWith( { type: EMAIL_VERIFY_REQUEST_SUCCESS } );
 		} );
 	} );
 } );

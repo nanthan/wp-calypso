@@ -14,13 +14,26 @@ export const requestEmailVerification = function( { dispatch }, action, next ) {
 		apiVersion: '1.1',
 		method: 'POST',
 		path: '/me/send-verification-email',
-		onSuccess: { type: EMAIL_VERIFY_REQUEST_SUCCESS },
-		onFailure: { type: EMAIL_VERIFY_REQUEST_FAILURE },
-	} ) );
+	}, action ) );
 
 	return next( action );
 };
 
+export const handleError = ( { dispatch }, action, next, rawError ) => {
+	dispatch( {
+		type: EMAIL_VERIFY_REQUEST_FAILURE,
+		message: rawError.message,
+	} );
+};
+
+export const handleSuccess = ( { dispatch } ) => {
+	dispatch( { type: EMAIL_VERIFY_REQUEST_SUCCESS } );
+};
+
 export default {
-	[ EMAIL_VERIFY_REQUEST ]: [ dispatchRequest( requestEmailVerification ) ],
+	[ EMAIL_VERIFY_REQUEST ]: [ dispatchRequest(
+		requestEmailVerification,
+		handleSuccess,
+		handleError
+	) ],
 };

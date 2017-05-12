@@ -19,7 +19,11 @@ export const status = createReducer( null, {
 	[ EMAIL_VERIFY_REQUEST_FAILURE ]: () => 'error',
 } );
 
+export const errorMessage = createReducer( '', {
+	[ EMAIL_VERIFY_REQUEST_FAILURE ]: ( state, { message } ) => message,
+} );
 
 export default combineReducers( {
 	status,
+	errorMessage,
 } );

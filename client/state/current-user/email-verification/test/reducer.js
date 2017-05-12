@@ -14,12 +14,14 @@ import {
 } from 'state/action-types';
 import reducer, {
 	status,
+	errorMessage,
 } from '../reducer';
 
 describe( 'reducer', () => {
 	it( 'exports expected reducer keys', () => {
 		expect( reducer( undefined, {} ) ).to.have.keys( [
 			'status',
+			'errorMessage'
 		] );
 	} );
 
@@ -47,6 +49,26 @@ describe( 'reducer', () => {
 		it( 'returns null when the status is reset', () => {
 			const result = status( undefined, { type: EMAIL_VERIFY_STATE_RESET } );
 			expect( result ).to.equal( null );
+		} );
+	} );
+
+	describe( '#errorMessage', () => {
+		it( 'returns an empty string by default', () => {
+			const result = errorMessage( undefined, { type: 'DUMMY' } );
+			expect( result ).to.equal( '' );
+		} );
+
+		it( 'returns the error message when there is an error sending an email', () => {
+			const message = 'This is an error message';
+			const result = errorMessage( undefined,
+				{ type: EMAIL_VERIFY_REQUEST_FAILURE, message }
+			);
+			expect( result ).to.equal( message );
+		} );
+
+		it( 'returns an empty string when the state is reset', () => {
+			const result = errorMessage( undefined, { type: EMAIL_VERIFY_STATE_RESET } );
+			expect( result ).to.equal( '' );
 		} );
 	} );
 } );
