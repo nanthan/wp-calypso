@@ -67,6 +67,7 @@ function adaptFeed( feed ) {
 		feed_URL: feed.feed_URL,
 		is_following: feed.is_following,
 		subscribers_count: feed.subscribers_count,
+		last_update: feed.last_update,
 	};
 }
 

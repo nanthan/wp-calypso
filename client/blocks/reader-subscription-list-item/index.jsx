@@ -5,6 +5,7 @@ import React from 'react';
 import classnames from 'classnames';
 import { isEmpty, get } from 'lodash';
 import { localize } from 'i18n-calypso';
+import moment from 'moment';
 
 /**
  * Internal Dependencies
@@ -56,6 +57,7 @@ function ReaderSubscriptionListItem( {
 	const isFollowing = ( site && site.is_following ) || ( feed && feed.is_following );
 	const preferBlavatar = get( site, 'is_multi_author', false );
 	const preferGravatar = ! preferBlavatar;
+	const lastUpdatedDate = moment( get( feed, 'last_update' ) ).fromNow();
 
 	if ( ! site && ! feed ) {
 		return <ReaderSubscriptionListItemPlaceholder />;
@@ -98,6 +100,7 @@ function ReaderSubscriptionListItem( {
 					className="reader-subscription-list-item__site-url"
 				>
 					{ formatUrlForDisplay( siteUrl ) }
+					{ feed && feed.last_update && ( ' ' + translate( 'updated' ) + ' ' + lastUpdatedDate ) }
 				</a>
 			) }
 			</div>

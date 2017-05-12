@@ -43,7 +43,8 @@ describe( 'reducer', ( ) => {
 				URL: undefined,
 				is_following: true,
 				name: undefined,
-				subscribers_count: undefined
+				subscribers_count: undefined,
+				last_update: undefined
 			} );
 		} );
 
@@ -64,7 +65,8 @@ describe( 'reducer', ( ) => {
 				URL: undefined,
 				feed_URL: undefined,
 				is_following: undefined,
-				subscribers_count: undefined
+				subscribers_count: undefined,
+				last_update: undefined,
 			} );
 		} );
 
@@ -99,7 +101,8 @@ describe( 'reducer', ( ) => {
 					URL: 'http://example.com',
 					feed_URL: 'http://example.com/feed',
 					subscribers_count: 10,
-					is_following: false
+					is_following: false,
+					last_update: undefined,
 				}
 			} );
 			expect( items( validState, { type: DESERIALIZE } ) ).to.deep.equal( validState );
@@ -132,6 +135,7 @@ describe( 'reducer', ( ) => {
 					feed_URL: undefined,
 					URL: undefined,
 					is_following: undefined,
+					last_update: undefined,
 				}
 			} );
 		} );
@@ -162,7 +166,9 @@ describe( 'reducer', ( ) => {
 					URL: undefined,
 					feed_URL: undefined,
 					is_following: true,
-					subscribers_count: undefined },
+					subscribers_count: undefined,
+					last_update: undefined,
+				},
 				1: {
 					feed_ID: 1,
 					blog_ID: 777,
@@ -170,7 +176,9 @@ describe( 'reducer', ( ) => {
 					URL: undefined,
 					feed_URL: undefined,
 					is_following: true,
-					subscribers_count: undefined },
+					subscribers_count: undefined,
+					last_update: undefined,
+				},
 				2: {
 					feed_ID: 2,
 					blog_ID: 999,
@@ -178,7 +186,9 @@ describe( 'reducer', ( ) => {
 					URL: undefined,
 					feed_URL: undefined,
 					is_following: true,
-					subscribers_count: undefined }
+					subscribers_count: undefined,
+					last_update: undefined,
+				},
 			} );
 		} );
 	} );
